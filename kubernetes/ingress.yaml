@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: weeve-ingress
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: "weeve-k8s"
+    kubernetes.io/ingress.allow-http: "true"
+    ingress.kubernetes.io/hsts-max-age: "0"
+spec:
+  backend:
+    serviceName: funnel-ui
+    servicePort: 80
+  rules:
+  - host: weeve.cornell.tech
+    http:
+      paths:
+      - backend:
+          serviceName: weeve-ui
+          servicePort: 80
+  - host: weeve-api.cornell.tech
+    http:
+      paths:
+      - backend:
+          serviceName: weeve-api
+          servicePort: 8080

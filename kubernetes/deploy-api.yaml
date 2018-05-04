@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: weeve-api
+  labels:
+    app: weeve-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weeve-api
+  template:
+    metadata:
+      labels:
+        app: weeve-api
+    spec:
+      containers:
+        - name: weeve-api
+          image: us.gcr.io/weeve-ct/weeve-api:latest
+          ports:
+            - containerPort: 8080
+              name: weeve-api
+          env:
+            - name: FLASK_CONFIG
+              value: /secrets/config/flask-config.yaml
+          volumeMounts:
+            - name: flask-config
+              mountPath: /secrets/config/
+              readOnly: true
+      volumes:
+        - name: flask-config
+          secret:
+            secretName: weeve-flask-config
