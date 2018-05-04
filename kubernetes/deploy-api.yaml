@@ -16,13 +16,13 @@ spec:
     spec:
       containers:
         - name: weeve-api
-          image: us.gcr.io/weeve-ct/weeve-api:latest
+          image: gcr.io/weeve-ct/weeve-api:latest
           ports:
             - containerPort: 8080
               name: weeve-api
           env:
             - name: FLASK_CONFIG
-              value: /secrets/config/flask-config.yaml
+              value: /secrets/config/weeve-flask-config.yaml
           volumeMounts:
             - name: flask-config
               mountPath: /secrets/config/
